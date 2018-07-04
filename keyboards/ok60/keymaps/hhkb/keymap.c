@@ -8,8 +8,21 @@
 #define _R     2
 #define _GAME  3  // for FPS Game (need LShift)
 
+// too long
+#define ALT_SFT_A   LSFT(LALT(KC_A))
+#define CTL_ALT_DEL LCTL(LALT(KC_DEL))
+#define GUI_TAB     LGUI(KC_TAB)
+#define GUI_W       LGUI(KC_W)
+#define GUI_SFT_S   LGUI(LSFT(KC_S))
+#define SFT_INS     LSFT(KC_INS)
+#define CTL_N       LCTL(KC_N)
+
 #define RGB_PLN RGB_MODE_PLAIN
 #define RGB_BRT RGB_MODE_BREATHE
+
+#ifndef IME_TAPPING_TERM
+#define IME_TAPPING_TERM 250
+#endif
 
 enum custom_keycodes {
     KC_ESCGR,   // Esc, ~, `
@@ -17,6 +30,7 @@ enum custom_keycodes {
     IME_ON,  // Tap: Ctrl+Shift+Ins, Hold: RCtrl
     IME_OFF  // Tap: Ctrl+Ins,       Hold: LCtrl
 };
+
 static bool bsdel_shifted = false;
 static bool escgr_shifted = false;
 static bool escgr_ctrled = false;
@@ -36,8 +50,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
      * |----------------------------------------------------------------------------------------|
      * | IME OFF |  Z  |  X  |  C  |  V  |  B  |  N  |  M  |  ,  |  .  |  /  |  IME ON  | MO(R) |
      * `----------------------------------------------------------------------------------------'
-     *         | Alt |  GUI  |               Shift & Space               |  GUI  | Alt |
-     *         `-----------------------------------------------------------------------'
+     *         | Alt |  LGUI  |             Shift & Space              |  RGUI  | Alt |
+     *         `----------------------------------------------------------------------'
      *
      */
     [_BASE] = KEYMAP(
@@ -45,21 +59,21 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         KC_TAB,   KC_Q,   KC_W,   KC_E,   KC_R,   KC_T,   KC_Y,   KC_U,   KC_I,    KC_O,    KC_P,     KC_LBRC,  KC_RBRC, KC_BSLS,
         MO(_L),   KC_A,   KC_S,   KC_D,   KC_F,   KC_G,   KC_H,   KC_J,   KC_K,    KC_L,    KC_SCLN,  KC_QUOT,  XXX,     KC_ENT,
         IME_OFF,  XXX,    KC_Z,   KC_X,   KC_C,   KC_V,   KC_B,   KC_N,   KC_M,    KC_COMM, KC_DOT,   KC_SLSH,  XXX,     IME_ON,  MO(_R),
-        XXX,      KC_LALT, KC_LGUI,                SFT_T(KC_SPC),         XXX,     KC_RGUI, KC_RALT,  XXX),
+        XXX,     KC_LALT, KC_LGUI,                SFT_T(KC_SPC),          XXX,     KC_RGUI, KC_RALT,  XXX),
 
-    [_L] = KEYMAP( // MO(2) : left side modifer
+    [_L] = KEYMAP( // MO(1) : left side modifer
         RESET,    KC_F1,  KC_F2,  KC_F3,  KC_F4,  KC_F5,  KC_F6,  KC_F7,  KC_F8,   KC_F9,   KC_F10,   KC_F11,   KC_F12,  KC_INS,  KC_DEL,
-        LGUI(KC_TAB),  ___,  ___,  ___,   ___,    ___,    ___,    ___,   S(KC_INS), ___,    KC_PSCR,  KC_HOME,  KC_END,  ___,
-        ___,    LCTL(S(KC_A)), ___, ___,  ___,    ___,   KC_LEFT, KC_DOWN, KC_UP,  KC_RGHT, ___,      ___,      ___,     ___,
-        ___,      ___,    ___,    ___,    ___,    ___,    ___,    LCTL(KC_N), ___, KC_PGDN, KC_PGUP,  ___,      ___,     IME_OFF, ___,
-        ___,     KC_LGUI, ___,                      S(KC_SPC),            ___,     ___,     KC_RGUI,  ___),
+        GUI_TAB,  ___,    GUI_W,  ___,    ___,    ___,    ___,    ___,    SFT_INS, ___,     KC_PSCR,  KC_HOME,  KC_END,  KC_PIPE,
+        ___,      ALT_SFT_A, GUI_SFT_S, ___, ___, ___,    KC_LEFT,KC_DOWN,KC_UP,   KC_RGHT, ___,      ___,      ___,     ___,
+        KC_LCTL,  ___,    ___,    ___,    ___,    ___,    ___,    CTL_N,  ___,     KC_PGDN, KC_PGUP,  ___,      ___,     KC_RCTL, ___,
+        ___,      ___,    ___,                    ___,                    ___,     ___,     ___,      ___),
 
     [_R] = KEYMAP( // MO(2) : right side modifer
-        KC_GRV,  KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_F5,   KC_F6,   KC_F7,   KC_F8,   KC_F9, KC_F10, KC_F11, KC_F12, ___,   LCTL(LALT(KC_DEL)),
+        KC_GRV,  KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_F5,   KC_F6,   KC_F7,   KC_F8,   KC_F9, KC_F10, KC_F11, KC_F12, ___,     CTL_ALT_DEL,
         ___,     RGB_TOG, RGB_MOD, RGB_HUI, RGB_HUD, RGB_SAI, RGB_SAD, RGB_VAI, RGB_VAD, ___,   ___,    ___,    ___,    ___,
         KC_CAPS, RGB_PLN, RGB_BRT, ___,     ___,     ___,     ___,     ___,     ___,     ___,   ___,    ___,    ___,    ___,
         ___,     ___,     ___,     ___,     ___,     ___,     ___,     ___,     ___,     ___,   ___,    ___,    ___,    TG(_GAME), ___,
-        ___,     KC_APP,  ___,                       KC_SPC,                    ___,     ___,   KC_APP, ___),
+        ___,     KC_APP,  ___,                       LSFT(KC_SPC),              ___,     ___,   KC_APP, ___),
 
     [_GAME] = KEYMAP( // TG(3)
         KC_ESCGR, KC_1,   KC_2,   KC_3,   KC_4,   KC_5,   KC_6,   KC_7,   KC_8,    KC_9,    KC_0,     KC_MINS,  KC_EQL,  KC_GRV,  KC_BSDEL,
@@ -133,7 +147,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                 scs_timer[0] = timer_read ();
                 register_mods(MOD_RCTL);
             } else {
-                if (!ctrl_interrupted[0] && timer_elapsed(scs_timer[0]) < TAPPING_TERM) {
+                if (!ctrl_interrupted[0] && timer_elapsed(scs_timer[0]) < IME_TAPPING_TERM) {
                     if (shift_pressed) {
                         unregister_mods(MOD_LSFT);
                         register_code(KC_INS);
@@ -156,7 +170,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                 scs_timer[1] = timer_read ();
                 register_mods(MOD_LCTL);
             } else {
-                if (!ctrl_interrupted[1] && timer_elapsed(scs_timer[1]) < TAPPING_TERM) {
+                if (!ctrl_interrupted[1] && timer_elapsed(scs_timer[1]) < IME_TAPPING_TERM) {
                     register_code(KC_INS);
                     unregister_code(KC_INS);
                 }
@@ -174,36 +188,24 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 }
 
 void led_set_user(uint8_t usb_led) {
+    if (usb_led & (1 << USB_LED_NUM_LOCK)) {
+    } else {
+    }
 
-	if (usb_led & (1 << USB_LED_NUM_LOCK)) {
-		
-	} else {
-		
-	}
+    if (usb_led & (1 << USB_LED_CAPS_LOCK)) {
+    } else {
+    }
 
-	if (usb_led & (1 << USB_LED_CAPS_LOCK)) {
-		
-	} else {
-		
-	}
+    if (usb_led & (1 << USB_LED_SCROLL_LOCK)) {
+    } else {
+    }
 
-	if (usb_led & (1 << USB_LED_SCROLL_LOCK)) {
-		
-	} else {
-		
-	}
+    if (usb_led & (1 << USB_LED_COMPOSE)) {
+    } else {
+    }
 
-	if (usb_led & (1 << USB_LED_COMPOSE)) {
-		
-	} else {
-		
-	}
-
-	if (usb_led & (1 << USB_LED_KANA)) {
-		
-	} else {
-		
-	}
-
+    if (usb_led & (1 << USB_LED_KANA)) {
+    } else {
+    }
 }
 

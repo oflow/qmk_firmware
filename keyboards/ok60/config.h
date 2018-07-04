@@ -32,8 +32,10 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 #define MATRIX_ROWS 5
 #define MATRIX_COLS 15
 
-/* MOD_T & Tap Dance Timeout */
+/* Mod-Tap & Tap Dance Timeout */
 #define TAPPING_TERM 150
+/* IME Mod-Tap */
+#define IME_TAPPING_TERM 250
 #define PERMISSIVE_HOLD
 /*
  * Keyboard Matrix Assignments
