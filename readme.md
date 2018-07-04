@@ -1,3 +1,5 @@
+![OK60 HHKB](images/hhkb.jpg)
+
 # OK60 HHKB
 
     make ok60:hhkb
