@@ -25,10 +25,11 @@
 #endif
 
 enum custom_keycodes {
-    KC_ESCGR,   // Esc, ~, `
-    KC_BSDEL,   // BS, Del
-    IME_ON,  // Tap: Ctrl+Shift+Ins, Hold: RCtrl
-    IME_OFF  // Tap: Ctrl+Ins,       Hold: LCtrl
+    KC_ESCGR = SAFE_RANGE, // Esc, Shift: ~, Ctrl: `
+    KC_BSDEL, // BS,  Shift: Del
+    KC_M_F12, // F12, Shift: F11,     Ctrl: F13
+    IME_ON,   // Tap: Ctrl+Shift+Ins, Hold: RCtrl
+    IME_OFF   // Tap: Ctrl+Ins,       Hold: LCtrl
 };
 
 static bool bsdel_shifted = false;
@@ -55,10 +56,10 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
      *
      */
     [_BASE] = KEYMAP(
-        KC_ESCGR, KC_1,   KC_2,   KC_3,   KC_4,   KC_5,   KC_6,   KC_7,   KC_8,    KC_9,    KC_0,     KC_MINS,  KC_EQL,  KC_GRV,  KC_BSDEL,
+        KC_ESCGR, KC_1,   KC_2,   KC_3,   KC_4,   KC_5,   KC_6,   KC_7,   KC_8,    KC_9,    KC_0,     KC_MINS,  KC_EQL,  KC_M_F12, KC_BSDEL,
         KC_TAB,   KC_Q,   KC_W,   KC_E,   KC_R,   KC_T,   KC_Y,   KC_U,   KC_I,    KC_O,    KC_P,     KC_LBRC,  KC_RBRC, KC_BSLS,
         MO(_L),   KC_A,   KC_S,   KC_D,   KC_F,   KC_G,   KC_H,   KC_J,   KC_K,    KC_L,    KC_SCLN,  KC_QUOT,  XXX,     KC_ENT,
-        IME_OFF,  XXX,    KC_Z,   KC_X,   KC_C,   KC_V,   KC_B,   KC_N,   KC_M,    KC_COMM, KC_DOT,   KC_SLSH,  XXX,     IME_ON,  MO(_R),
+        IME_OFF,  XXX,    KC_Z,   KC_X,   KC_C,   KC_V,   KC_B,   KC_N,   KC_M,    KC_COMM, KC_DOT,   KC_SLSH,  XXX,     IME_ON,   MO(_R),
         XXX,     KC_LALT, KC_LGUI,                SFT_T(KC_SPC),          XXX,     KC_RGUI, KC_RALT,  XXX),
 
     [_L] = KEYMAP( // MO(1) : left side modifer
@@ -138,6 +139,24 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             } else {
                 unregister_code((escgr_shifted || escgr_ctrled) ? KC_GRV : KC_ESC);
                 if (escgr_ctrled) register_mods(MOD_RCTL);
+            }
+            return false;
+        case KC_M_F12:
+            if (record->event.pressed) {
+                if (ctrl_pressed) {
+                    unregister_mods(MOD_RCTL);
+                    register_code(KC_F13);
+                    unregister_code(KC_F13);
+                    register_mods(MOD_RCTL);
+                } else if (shift_pressed) {
+                    unregister_mods(MOD_LSFT);
+                    register_code(KC_F11);
+                    unregister_code(KC_F11);
+                    register_mods(MOD_LSFT);
+                } else {
+                    register_code(KC_F12);
+                    unregister_code(KC_F12);
+                }
             }
             return false;
         case IME_ON:
