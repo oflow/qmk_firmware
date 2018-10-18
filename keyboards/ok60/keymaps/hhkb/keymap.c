@@ -4,9 +4,9 @@
 #define ___  KC_TRNS
 
 #define _BASE  0
-#define _L     1
-#define _R     2
-#define _GAME  3  // for FPS Game (need LShift)
+#define _GAME  1  // for FPS Game (need LShift)
+#define _L     2
+#define _R     3
 
 // short modifier: S(kc) = LSFT(kc) = (kc | QK_LSFT)
 #define C(kc)      (kc | QK_LCTL)
@@ -64,6 +64,29 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
     /*
      * ,----------------------------------------------------------------------------------------.
+     * | ESC |  1  |  2  |  3  |  4  |  5  |  6  |  7  |  8  |  9  |  0  |  -  |  =  | F12 | BS |
+     * |----------------------------------------------------------------------------------------|
+     * | TAB  |  Q  |  W  |  E  |  R  |  T  |  Y  |  U  |  I  |  O  |  P  |  [  |  ]  |    \    |
+     * |----------------------------------------------------------------------------------------|
+     * | Map   |  A  |  S  |  D  |  F  |  G  |  H  |  J  |  K  |  L  |  ;  |  '  |     Enter    |
+     * |----------------------------------------------------------------------------------------|
+     * | LShift  |  Z  |  X  |  C  |  V  |  B  |  N  |  M  |  ,  |  .  |  /  |  IME TG  | TG(G) |
+     * `----------------------------------------------------------------------------------------'
+     *         | LCtl |  LAlt  |           RShift & Space              |  RGUI  | Alt |
+     *         `----------------------------------------------------------------------'
+     */
+
+    [_GAME] = LAYOUT_60_hhkb( // TG(1)
+        KC_ESGR, KC_1,    KC_2,    KC_3,    KC_4,    KC_5,    KC_6,    KC_7,    KC_8,    KC_9,    KC_0,    KC_MINS, KC_EQL,  KC_MF12,  KC_BSDL,
+        KC_TAB,  KC_Q,    KC_W,    KC_E,    KC_R,    KC_T,    KC_Y,    KC_U,    KC_I,    KC_O,    KC_P,    KC_LBRC, KC_RBRC, KC_BSLS,
+        LT(_L,KC_M),KC_A, KC_S,    KC_D,    KC_F,    KC_G,    KC_H,    KC_J,    KC_K,    KC_L,    KC_SCLN, KC_QUOT, XXX,     KC_ENT,
+        KC_LSFT, XXX,     KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,    KC_N,    KC_M,    KC_COMM, KC_DOT,  KC_SLSH, XXX,     IME_TG,   TO(_BASE),
+
+        XXX,      KC_LCTL, KC_LALT,                  KC_SPC,                    XXX,     KC_RGUI, KC_RALT,  XXX),
+
+
+    /*
+     * ,----------------------------------------------------------------------------------------.
      * | RSET|  F1 |  F2 |  F3 |  F4 |  F5 |  F6 |  F7 |  F8 |  F9 | F10 | F11 | F12 | Ins | Del|
      * |----------------------------------------------------------------------------------------|
      * | G-Tab|     | G-w |     |     |     |     |     |S-Ins|     | PrScr| Home | End |       |
@@ -75,7 +98,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
      *         |     |        |             Shift & Space              |        |     |
      *         `----------------------------------------------------------------------'
      */
-    [_L] = LAYOUT_60_hhkb( // MO(1) : left side modifer
+    [_L] = LAYOUT_60_hhkb( // MO(2) : left side modifer
         RESET,   KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_F5,   KC_F6,   KC_F7,   KC_F8,   KC_F9,   KC_F10,  KC_F11,  KC_F12,  KC_INS,  KC_DEL,
         G(KC_TAB),___,    G(KC_W), ___,     ___,     ___,     ___,     ___,     S(KC_INS),___,    KC_PSCR, KC_HOME, KC_END,  KC_PIPE,
         ___,     S_A(KC_A),S_G(KC_S),___,   ___,     ___,     KC_LEFT, KC_DOWN, KC_UP,   KC_RGHT, ___,     ___,     ___,     ___,
@@ -96,34 +119,13 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
      *         `----------------------------------------------------------------------'
      */
 
-    [_R] = LAYOUT_60_hhkb( // MO(2) : right side modifer
+    [_R] = LAYOUT_60_hhkb( // MO(3) : right side modifer
         KC_GRV,  KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_F5,   KC_F6,   KC_F7,   KC_F8,   KC_F9,   KC_F10,  KC_F11,  KC_F12,  ___,     C_A(KC_DEL),
         ___,     RGB_TOG, RGB_MOD, RGB_HUI, RGB_HUD, RGB_SAI, RGB_SAD, RGB_VAI, RGB_VAD, ___,     ___,     RGB_PLN, RGB_BRT, ___,
         KC_MSTP, KC_MPRV, KC_MPLY, KC_MNXT, ___,     ___,     ___,     ___,     ___,     ___,     ___,     ___,     ___,     ___,
-        ___,     XXX,     KC_VOLD, KC_VOLU, ___,     ___,     ___,     ___,     ___,     ___,     ___,     ___,     ___,     TG(_GAME), ___,
-        ___,     KC_APP,  ___,                       S(KC_SPC),                          ___,     ___,     KC_APP,  ___),
+        ___,     XXX,     KC_VOLD, KC_VOLU, ___,     ___,     ___,     ___,     ___,     ___,     ___,     ___,     ___,     TO(_GAME), ___,
+        ___,     KC_APP,  ___,                       S(KC_SPC),                          ___,     ___,     KC_APP,  ___)
 
-    /*
-     * ,----------------------------------------------------------------------------------------.
-     * | ESC |  1  |  2  |  3  |  4  |  5  |  6  |  7  |  8  |  9  |  0  |  -  |  =  | F12 | BS |
-     * |----------------------------------------------------------------------------------------|
-     * | TAB  |  Q  |  W  |  E  |  R  |  T  |  Y  |  U  |  I  |  O  |  P  |  [  |  ]  |    \    |
-     * |----------------------------------------------------------------------------------------|
-     * | Map   |  A  |  S  |  D  |  F  |  G  |  H  |  J  |  K  |  L  |  ;  |  '  |     Enter    |
-     * |----------------------------------------------------------------------------------------|
-     * | LShift  |  Z  |  X  |  C  |  V  |  B  |  N  |  M  |  ,  |  .  |  /  |  IME TG  | TG(G) |
-     * `----------------------------------------------------------------------------------------'
-     *         | LCtl |  LAlt  |           RShift & Space              |  RGUI  | Alt |
-     *         `----------------------------------------------------------------------'
-     */
-
-    [_GAME] = LAYOUT_60_hhkb( // TG(3)
-        KC_ESGR, KC_1,    KC_2,    KC_3,    KC_4,    KC_5,    KC_6,    KC_7,    KC_8,    KC_9,    KC_0,    KC_MINS, KC_EQL,  KC_MF12,  KC_BSDL,
-        KC_TAB,  KC_Q,    KC_W,    KC_E,    KC_R,    KC_T,    KC_Y,    KC_U,    KC_I,    KC_O,    KC_P,    KC_LBRC, KC_RBRC, KC_BSLS,
-        LT(_L,KC_M),KC_A, KC_S,    KC_D,    KC_F,    KC_G,    KC_H,    KC_J,    KC_K,    KC_L,    KC_SCLN, KC_QUOT, XXX,     KC_ENT,
-        KC_LSFT, XXX,     KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,    KC_N,    KC_M,    KC_COMM, KC_DOT,  KC_SLSH, XXX,     IME_TG,   TG(_GAME),
-
-        XXX,      KC_LCTL, KC_LALT,                  RSFT_T(KC_SPC),                      XXX,     KC_RGUI, KC_RALT,  XXX)
 };
 
 void matrix_init_user(void) {
@@ -134,15 +136,12 @@ void matrix_scan_user(void) {
 uint32_t layer_state_set_user(uint32_t state) {
     switch (biton32(state)) {
     case _BASE:
-    case _L:
-    case _R:
+    //case _L:
+    //case _R:
         rgblight_setrgb (0xFF,  0x00, 0x00);
         break;
     case _GAME:
         rgblight_setrgb (0x7A,  0x00, 0xFF);
-        break;
-    default:
-        rgblight_setrgb (0xFF,  0x00, 0x00);
         break;
     }
     return state;
