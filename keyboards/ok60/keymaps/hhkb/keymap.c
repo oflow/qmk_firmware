@@ -51,7 +51,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
      * |----------------------------------------------------------------------------------------|
      * | IME OFF |  Z  |  X  |  C  |  V  |  B  |  N  |  M  |  ,  |  .  |  /  |  IME ON  | MO(R) |
      * `----------------------------------------------------------------------------------------'
-     *         | Alt |  LGUI  |             Shift & Space              |  RGUI  | Alt |
+     *         | LGUI |  LAlt  |            Shift & Space              |  RAlt  | GUI |
      *         `----------------------------------------------------------------------'
      *
      */
@@ -60,7 +60,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         KC_TAB,  KC_Q,    KC_W,    KC_E,    KC_R,    KC_T,    KC_Y,    KC_U,    KC_I,    KC_O,    KC_P,    KC_LBRC, KC_RBRC, KC_BSLS,
         MO(_L),  KC_A,    KC_S,    KC_D,    KC_F,    KC_G,    KC_H,    KC_J,    KC_K,    KC_L,    KC_SCLN, KC_QUOT, XXX,     KC_ENT,
         IME_OFF, XXX,     KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,    KC_N,    KC_M,    KC_COMM, KC_DOT,  KC_SLSH, XXX,     IME_ON,  MO(_R),
-        XXX,     KC_LALT, KC_LGUI,                   LSFT_T(KC_SPC),                     XXX,     KC_RGUI, KC_RALT, XXX),
+        XXX,     KC_LGUI, KC_LALT,                   LSFT_T(KC_SPC),                     XXX,     KC_RALT, KC_RGUI, XXX),
 
     /*
      * ,----------------------------------------------------------------------------------------.
@@ -72,48 +72,46 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
      * |----------------------------------------------------------------------------------------|
      * | LShift  |  Z  |  X  |  C  |  V  |  B  |  N  |  M  |  ,  |  .  |  /  |  IME TG  | TG(G) |
      * `----------------------------------------------------------------------------------------'
-     *         | LCtl |  LAlt  |           RShift & Space              |  RGUI  | Alt |
+     *         | LCtl |  LAlt  |                Space                 |  RAlt  | RCtl |
      *         `----------------------------------------------------------------------'
      */
-
-    [_GAME] = LAYOUT_60_hhkb( // TG(1)
+    [_GAME] = LAYOUT_60_hhkb( // TO(1) : for FPS Game
         KC_ESGR, KC_1,    KC_2,    KC_3,    KC_4,    KC_5,    KC_6,    KC_7,    KC_8,    KC_9,    KC_0,    KC_MINS, KC_EQL,  KC_MF12,  KC_BSDL,
         KC_TAB,  KC_Q,    KC_W,    KC_E,    KC_R,    KC_T,    KC_Y,    KC_U,    KC_I,    KC_O,    KC_P,    KC_LBRC, KC_RBRC, KC_BSLS,
         LT(_L,KC_M),KC_A, KC_S,    KC_D,    KC_F,    KC_G,    KC_H,    KC_J,    KC_K,    KC_L,    KC_SCLN, KC_QUOT, XXX,     KC_ENT,
-        KC_LSFT, XXX,     KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,    KC_N,    KC_M,    KC_COMM, KC_DOT,  KC_SLSH, XXX,     IME_TG,   TO(_BASE),
+        KC_LSFT, XXX,     KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,    KC_N,    KC_M,    KC_COMM, KC_DOT,  KC_SLSH, XXX,     KC_RSFT,  TO(_BASE),
 
-        XXX,      KC_LCTL, KC_LALT,                  KC_SPC,                    XXX,     KC_RGUI, KC_RALT,  XXX),
-
+        XXX,      KC_LCTL, KC_LALT,                       KC_SPC,                        XXX,     IME_TG,  KC_RCTL, XXX),
 
     /*
      * ,----------------------------------------------------------------------------------------.
      * | RSET|  F1 |  F2 |  F3 |  F4 |  F5 |  F6 |  F7 |  F8 |  F9 | F10 | F11 | F12 | Ins | Del|
      * |----------------------------------------------------------------------------------------|
-     * | G-Tab|     | G-w |     |     |     |     |     |S-Ins|     | PrScr| Home | End |       |
+     * | G-Tab|S-C-q| G-w |     |     |     |     |     |S-Ins|     | PrScr| Home | End | Pipe  |
      * |----------------------------------------------------------------------------------------|
-     * |       |A-S-a|G-S-s|     |     |     |  ← |  ↓ |  ↑ |  → |     |     |     Enter    |
+     * |       |S-A-a|S-G-s|     |     |     |  ← |  ↓ |  ↑ |  → |     |S-C-'|     Enter    |
      * |----------------------------------------------------------------------------------------|
-     * | LCtrl   |     |     |     |     |     | C-n |     | PgDn| PgUp|     |  RCtrl   | MO(R) |
+     * | LCtrl   |     |     |     |     |     | C-n |     | PgDn| PgUp|     |  LCtrl   |       |
      * `----------------------------------------------------------------------------------------'
-     *         |     |        |             Shift & Space              |        |     |
+     *         |     |       |              Shift & Space             | S-C-t | S-C-r |
      *         `----------------------------------------------------------------------'
      */
     [_L] = LAYOUT_60_hhkb( // MO(2) : left side modifer
-        RESET,   KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_F5,   KC_F6,   KC_F7,   KC_F8,   KC_F9,   KC_F10,  KC_F11,  KC_F12,  KC_INS,  KC_DEL,
-        G(KC_TAB),___,    G(KC_W), ___,     ___,     ___,     ___,     ___,     S(KC_INS),___,    KC_PSCR, KC_HOME, KC_END,  KC_PIPE,
-        ___,     S_A(KC_A),S_G(KC_S),___,   ___,     ___,     KC_LEFT, KC_DOWN, KC_UP,   KC_RGHT, ___,     ___,     ___,     ___,
-        KC_LCTL, ___,     ___,     ___,     ___,     ___,     ___,     C(KC_N), ___,     KC_PGDN, KC_PGUP, ___,     ___,     KC_LCTL, ___,
-        ___,     ___,     ___,                       ___,                                ___,     ___,     ___,     ___),
+        RESET,    KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_F5,   KC_F6,   KC_F7,   KC_F8,   KC_F9,    KC_F10,   KC_F11,   KC_F12,  KC_INS, KC_DEL,
+        G(KC_TAB),S_C(KC_Q),G(KC_W),___,     ___,     ___,     ___,    ___,     S(KC_INS),___,      KC_PSCR,  KC_HOME,  KC_END,  KC_PIPE,
+        ___,      S_A(KC_A),S_G(KC_S),___,   ___,     ___,     KC_LEFT, KC_DOWN, KC_UP,   KC_RGHT,  ___,      S_C(KC_QUOT),XXX,  ___,
+        KC_LCTL,  XXX,     ___,     ___,     ___,     ___,     ___,     C(KC_N), ___,     KC_PGDN,  KC_PGUP,  ___,      XXX,     KC_LCTL, ___,
+        XXX,      ___,     ___,                           ___,                            XXX,      S_C(KC_T),S_C(KC_R),XXX),
 
-    /*
+    /*  R2, R3 : use Nerd-Fonts
      * ,----------------------------------------------------------------------------------------.
-     * | `   |  F1 |  F2 |  F3 |  F4 |  F5 |  F6 |  F7 |  F8 |  F9 | F10 | F11 | F12 |   | CADel|
+     * | `   |  F1 |  F2 |  F3 |  F4 |  F5 |  F6 |  F7 |  F8 |  F9 | F10 | F11 | F12 |   |CA-Del|
      * |----------------------------------------------------------------------------------------|
-     * |      |   |     |     |     |     |     |     |     |     |     |     |     |         |
+     * | RGB> | TOG | MOD | HUI | HUD | SAI | SAD | VAI | VAD |     |     | PLN | BRT |         |
      * |----------------------------------------------------------------------------------------|
      * |     |   |   |   |     |     |     |     |     |     |     |     |              |
      * |----------------------------------------------------------------------------------------|
-     * |         | - | + |     |     |     |     |     |     |     |     |  Toggl(G) |      |
+     * |         | - | + |     |     |     |     |     |     |     |     | TO(GAME)  |      |
      * `----------------------------------------------------------------------------------------'
      *         |     |        |                S-Space                 |        |     |
      *         `----------------------------------------------------------------------'
@@ -122,9 +120,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     [_R] = LAYOUT_60_hhkb( // MO(3) : right side modifer
         KC_GRV,  KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_F5,   KC_F6,   KC_F7,   KC_F8,   KC_F9,   KC_F10,  KC_F11,  KC_F12,  ___,     C_A(KC_DEL),
         ___,     RGB_TOG, RGB_MOD, RGB_HUI, RGB_HUD, RGB_SAI, RGB_SAD, RGB_VAI, RGB_VAD, ___,     ___,     RGB_PLN, RGB_BRT, ___,
-        KC_MSTP, KC_MPRV, KC_MPLY, KC_MNXT, ___,     ___,     ___,     ___,     ___,     ___,     ___,     ___,     ___,     ___,
-        ___,     XXX,     KC_VOLD, KC_VOLU, ___,     ___,     ___,     ___,     ___,     ___,     ___,     ___,     ___,     TO(_GAME), ___,
-        ___,     KC_APP,  ___,                       S(KC_SPC),                          ___,     ___,     KC_APP,  ___)
+        KC_MSTP, KC_MPRV, KC_MPLY, KC_MNXT, ___,     ___,     ___,     ___,     ___,     ___,     ___,     ___,     XXX,     ___,
+        ___,     XXX,     KC_VOLD, KC_VOLU, ___,     ___,     ___,     ___,     ___,     ___,     ___,     ___,     XXX,     TO(_GAME), ___,
+        XXX,     KC_APP,  ___,                       S(KC_SPC),                          XXX,     ___,     KC_APP,  XXX)
 
 };
 
