@@ -1,8 +1,13 @@
+# XD60
+![XD60](images/xd60_oflow.jpg)
+
+    make xd60/rev3:oflow
+
+
+# OK60 like HHKB
 ![OK60 HHKB](images/hhkb.jpg)
 
-# OK60 HHKB
-
-    make ok60:hhkb
+    make ok60:oflow
 
 
 ## Keymap
