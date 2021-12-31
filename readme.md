@@ -1,3 +1,9 @@
+# BM60HSRGB_Poker/Rev2
+
+![BM60RGB_POKER/Rev2](images/bm60v2.jpg)
+
+    make kprepublic/bm60hsrgb_poker/rev2:oflow
+
 # XD60
 ![XD60](images/xd60_oflow.jpg)
 
